@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Franchising - Clinton Oh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #666;
+            --secondary: #2870ff;
+            --accent: #ff6b35;
+            --background: #fafafa;
+            --text: #333333;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(135deg, var(--secondary), var(--accent));
+            --glassmorphism: rgba(255, 255, 255, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding-top: 80px;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--gradient);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="20" cy="80" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .page-header h1 {
+            color: white;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s 0.3s forwards;
+        }
+
+        .page-header .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            font-weight: 500;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeInUp 1s 0.5s forwards;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 0;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Franchising Steps */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px var(--shadow);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(40, 112, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .step-card:hover::before {
+            left: 100%;
+        }
+
+        .step-card[data-animate].animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(40, 112, 255, 0.2);
+            border: 2px solid rgba(40, 112, 255, 0.2);
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .step-card:hover .step-number {
+            transform: scale(1.1);
+            animation: pulse 2s infinite;
+        }
+
+        .step-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .step-card p {
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        /* Benefits Section */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px var(--shadow);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateX(-50px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card:nth-child(even) {
+            transform: translateX(50px);
+        }
+
+        .benefit-card[data-animate].animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .benefit-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .benefit-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.2);
+        }
+
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            flex-shrink: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .benefit-card:hover .benefit-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .benefit-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .benefit-content p {
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--gradient);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-section h2 {
+            color: white;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text);
+            color: white;
+            padding: 60px 0 30px;
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes morphBlob {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .navbar-container {
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .page-header .subtitle {
+                font-size: 1.1rem;
+                padding: 0 20px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .steps-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .step-card,
+            .benefit-card {
+                padding: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .page-header {
+                padding: 100px 0 60px;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .main-content {
+                padding: 60px 0;
+            }
+
+            .section {
+                margin-bottom: 60px;
+            }
+
+            .step-card,
+            .benefit-card {
+                padding: 1.5rem;
+            }
+
+            .benefit-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cta-section {
+                padding: 60px 0;
+            }
+        }
+
+        /* Floating Elements */
+        .floating-shape {
+            position: absolute;
+            background: var(--gradient);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: -2s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: -4s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -1s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">Clinton Oh</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="contact-us.html">Contact us</a></li>
+                <li><a href="coaching.html">Coaching</a></li>
+                <li><a href="franchising.html" class="active">Franchising</a></li>
+                <li><a href="mymanager.html">Mymanager</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Franchising Excellence</h1>
+            <p class="subtitle">GET YOUR BUSINESS & BRAND READY TO FRANCHISING</p>
+        </div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Franchising Steps Section -->
+            <section class="section">
+                <h2 class="section-title" data-animate>Your Franchise Journey</h2>
+                <p class="section-subtitle" data-animate data-delay="100">Transform your successful business into a scalable franchise system with our proven methodology</p>
+                
+                <div class="steps-grid">
+                    <div class="step-card" data-animate data-delay="200">
+                        <div class="step-number">1</div>
+                        <h3>Business Assessment</h3>
+                        <p>We analyze your current business model, operational systems, and market position to determine franchise readiness and identify optimization opportunities.</p>
+                    </div>
+                    
+                    <div class="step-card" data-animate data-delay="300">
+                        <div class="step-number">2</div>
+                        <h3>System Development</h3>
+                        <p>Create comprehensive operational manuals, training programs, and standardized processes that ensure consistency across all franchise locations.</p>
+                    </div>
+                    
+                    <div class="step-card" data-animate data-delay="400">
+                        <div class="step-number">3</div>
+                        <h3>Legal Documentation</h3>
+                        <p>Develop franchise disclosure documents, franchise agreements, and all necessary legal frameworks to protect your brand and franchisees.</p>
+                    </div>
+                    
+                    <div class="step-card" data-animate data-delay="500">
+                        <div class="step-number">4</div>
+                        <h3>Marketing & Sales</h3>
+                        <p>Launch targeted franchise recruitment campaigns and develop sales processes to attract qualified franchisee candidates to grow your network.</p>
+                    </div>
+                    
+                    <div class="step-card" data-animate data-delay="600">
+                        <div class="step-number">5</div>
+                        <h3>Ongoing Support</h3>
+                        <p>Establish continuous training, marketing support, and operational guidance systems to ensure franchisee success and brand consistency.</p>
+                    </div>
+                    
+                    <div class="step-card" data-animate data-delay="700">
+                        <div class="step-number">6</div>
+                        <h3>Growth & Expansion</h3>
+                        <p>Scale your franchise network strategically with territory development, multi-unit operations, and international expansion opportunities.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Benefits Section -->
+            <section class="section">
+                <h2 class="section-title" data-animate>Why Franchise Your Business</h2>
+                <p class="section-subtitle" data-animate data-delay="100">Discover the advantages of franchising and how it can accelerate your business growth</p>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card" data-animate data-delay="200">
+                        <div class="benefit-icon">🚀</div>
+                        <div class="benefit-content">
+                            <h3>Rapid Expansion</h3>
+                            <p>Scale your business quickly with franchisees providing capital and local market expertise, reducing your financial risk while accelerating growth.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card" data-animate data-delay="300">
+                        <div class="benefit-icon">💰</div>
+                        <div class="benefit-content">
+                            <h3>Multiple Revenue Streams</h3>
+                            <p>Generate income through franchise fees, ongoing royalties, and additional revenue sources like training and supplier relationships.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card" data-animate data-delay="400">
+                        <div class="benefit-icon">🎯</div>
+                        <div class="benefit-content">
+                            <h3>Brand Recognition</h3>
+                            <p>Build a powerful brand presence across multiple markets with consistent messaging and standardized customer experiences.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card" data-animate data-delay="500">
+                        <div class="benefit-icon">⚡</div>
+                        <div class="benefit-content">
+                            <h3>Motivated Partners</h3>
+                            <p>Work with franchisees who are personally invested in success, providing better management and customer service than employees.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card" data-animate data-delay="600">
+                        <div class="benefit-icon">🛡️</div>
+                        <div class="benefit-content">
+                            <h3>Reduced Risk</h3>
+                            <p>Minimize your investment risk while expanding, as franchisees provide the capital needed for new location development and operations.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card" data-animate data-delay="700">
+                        <div class="benefit-icon">📈</div>
+                        <div class="benefit-content">
+                            <h3>Economies of Scale</h3>
+                            <p>Leverage collective purchasing power, shared marketing costs, and operational efficiencies across your entire franchise network.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Success Story Section -->
+            <section class="section">
+                <h2 class="section-title" data-animate>Franchise Success Stories</h2>
+                <p class="section-subtitle" data-animate data-delay="100">See how businesses have transformed through strategic franchising</p>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card" data-animate data-delay="200">
+                        <div class="benefit-icon">🏆</div>
+                        <div class="benefit-content">
+                            <h3>Restaurant Chain Growth</h3>
+                            <p>Helped a local restaurant expand from 3 locations to 50+ franchises across 5 states, increasing revenue by 800% in 3 years.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card" data-animate data-delay="300">
+                        <div class="benefit-icon">💼</div>
+                        <div class="benefit-content">
+                            <h3>Service Business Scale</h3>
+                            <p>Transformed a regional cleaning service into a national franchise with 100+ locations, creating $50M+ in system-wide revenue.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card" data-animate data-delay="400">
+                        <div class="benefit-icon">🎓</div>
+                        <div class="benefit-content">
+                            <h3>Education Franchise</h3>
+                            <p>Developed a tutoring center franchise system that grew to 75 locations, providing educational services to thousands of students.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-card" data-animate data-delay="500">
+                        <div class="benefit-icon">🏥</div>
+                        <div class="benefit-content">
+                            <h3>Health & Wellness</h3>
+                            <p>Franchised a fitness concept that expanded to 200+ locations internationally, revolutionizing the boutique fitness industry.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 data-animate>Ready to Franchise Your Business?</h2>
+                <p data-animate data-delay="100">Take the first step towards transforming your successful business into a scalable franchise system. Let's discuss your franchising potential and create a customized growth strategy.</p>
+                <div class="cta-buttons" data-animate data-delay="200">
+                    <a href="contact-us.html" class="btn btn-primary">Schedule Consultation</a>
+                    <a href="tel:+1234567890" class="btn btn-secondary">Call Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Clinton Oh</h3>
+                    <p>Entrepreneur - Consultant - Investor</p>
+                    <p

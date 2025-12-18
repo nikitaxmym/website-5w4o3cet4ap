@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mymanager - Clinton Oh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #666;
+            --secondary: #2870ff;
+            --accent: #ff6b35;
+            --background: #fafafa;
+            --text: #333333;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-hover: rgba(0, 0, 0, 0.2);
+            --glass: rgba(255, 255, 255, 0.25);
+            --animation-speed: 0.3s;
+            --animation-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --animation-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding-top: 80px;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes morphBlob { 0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; } }
+
+        [data-animate] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--animation-smooth);
+        }
+
+        [data-animate].animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
+            transition: all var(--animation-speed) var(--animation-smooth);
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: all var(--animation-speed) var(--animation-smooth);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all var(--animation-speed) var(--animation-smooth);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 112, 255, 0.3);
+        }
+
+        .nav-links a:hover:not(.active) {
+            color: var(--secondary);
+            background: rgba(40, 112, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.1"><circle cx="30" cy="30" r="1"/></g></svg>');
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            transition: all var(--animation-speed) var(--animation-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px var(--shadow-hover);
+            border-color: var(--secondary);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .feature-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .feature-card p {
+            color: var(--primary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-btn {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--animation-speed) var(--animation-bounce);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .feature-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(40, 112, 255, 0.3);
+        }
+
+        /* CRM Features */
+        .crm-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .crm-feature {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px var(--shadow);
+            transition: all var(--animation-speed) var(--animation-smooth);
+        }
+
+        .crm-feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--shadow-hover);
+        }
+
+        .crm-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 8s linear infinite;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            background: white;
+            color: var(--secondary);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--animation-speed) var(--animation-bounce);
+            text-decoration: none;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all var(--animation-speed) var(--animation-smooth);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all var(--animation-speed) var(--animation-bounce);
+        }
+
+        .social-icon:hover {
+            background: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                padding: 2rem;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .page-header {
+                padding: 3rem 1rem 2rem;
+            }
+
+            .section {
+                padding: 2rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">Clinton Oh</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="contact-us.html">Contact us</a></li>
+            <li><a href="coaching.html">Coaching</a></li>
+            <li><a href="franchising.html">Franchising</a></li>
+            <li><a href="mymanager.html" class="active">Mymanager</a></li>
+        </ul>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 data-animate>MyManager CRM</h1>
+            <p data-animate data-delay="200">Revolutionary CRM and marketing tool engineered to save time and empower businesses of all sizes</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title" data-animate>Transform Your Business Operations</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card" data-animate data-delay="100">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Streamlined CRM</h3>
+                    <p>Manage all your customer relationships in one powerful platform. Track interactions, automate follow-ups, and never miss an opportunity to grow your business.</p>
+                    <a href="contact-us.html" class="feature-btn">Learn More</a>
+                </div>
+
+                <div class="feature-card" data-animate data-delay="200">
+                    <div class="feature-icon">📈</div>
+                    <h3>Marketing Automation</h3>
+                    <p>Automate your marketing campaigns with precision. From email sequences to social media scheduling, MyManager handles it all while you focus on what matters most.</p>
+                    <a href="contact-us.html" class="feature-btn">Get Started</a>
+                </div>
+
+                <div class="feature-card" data-animate data-delay="300">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Time-Saving Tools</h3>
+                    <p>Eliminate repetitive tasks with intelligent automation. MyManager's advanced features save hours each day, allowing you to focus on strategic growth initiatives.</p>
+                    <a href="contact-us.html" class="feature-btn">Discover More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CRM Features Section -->
+    <section class="section" style="background: white;">
+        <div class="container">
+            <h2 class="section-title" data-animate>Powerful Features for Modern Businesses</h2>
+            
+            <div class="crm-features">
+                <div class="crm-feature" data-animate data-delay="100">
+                    <div class="crm-icon">📊</div>
+                    <h3>Analytics Dashboard</h3>
+                    <p>Real-time insights into your business performance with customizable reports and KPI tracking.</p>
+                </div>
+
+                <div class="crm-feature" data-animate data-delay="200">
+                    <div class="crm-icon">🔄</div>
+                    <h3>Workflow Automation</h3>
+                    <p>Create custom workflows that automate your business processes and increase efficiency.</p>
+                </div>
+
+                <div class="crm-feature" data-animate data-delay="300">
+                    <div class="crm-icon">💬</div>
+                    <h3>Communication Hub</h3>
+                    <p>Centralize all customer communications across multiple channels in one unified platform.</p>
+                </div>
+
+                <div class="crm-feature" data-animate data-delay="400">
+                    <div class="crm-icon">🎯</div>
+                    <h3>Lead Management</h3>
+                    <p>Capture, nurture, and convert leads with intelligent scoring and automated follow-up sequences.</p>
+                </div>
+
+                <div class="crm-feature" data-animate data-delay="500">
+                    <div class="crm-icon">📱</div>
+                    <h3>Mobile Ready</h3>
+                    <p>Access your business data anywhere, anytime with our fully responsive mobile interface.</p>
+                </div>
+
+                <div class="crm-feature" data-animate data-delay="600">
+                    <div class="crm-icon">🔐</div>
+                    <h3>Enterprise Security</h3>
+                    <p>Bank-level security with encrypted data storage and advanced user permission controls.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title" data-animate>Built by an Entrepreneur, for Entrepreneurs</h2>
+            
+            <div class="feature-card" data-animate data-delay="200" style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <div class="feature-icon" style="margin: 0 auto 2rem;">👨‍💼</div>
+                <h3>Clinton's Vision</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                    "As a seasoned entrepreneur and CEO of multiple franchise companies, I understand the challenges businesses face. MyManager was born from my own need for a comprehensive solution that could handle the complexities of modern business operations while remaining intuitive and powerful."
+                </p>
+                <p style="font-size: 1rem; color: var(--primary);">
+                    Through Next Level Media, Clinton leverages cutting-edge technology to revolutionize how businesses operate and grow. MyManager represents the culmination of years of experience in scaling businesses and understanding what truly drives success.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" data-animate>
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Transform Your Business?</h2>
+                <p class="cta-text">Join thousands of businesses already using MyManager to streamline operations, increase efficiency, and drive growth. Start your journey today.</p>
+                <a href="contact-us.html" class="cta-btn">Get Started Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="contact-us.html">Contact</a>
+                <a href="coaching.html">Coaching</a>
+                <a href="franchising.html">Franchising</a>
+                <a href="mymanager.html">MyManager</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-icon">📧</a>
+                <a href="#" class="social-icon">📱</a>
+                <a href="#" class="social-icon">💼</a>
+            </div>
+            <p>&copy; 2024 Clinton Oh. All rights reserved. | Entrepreneur - Consultant - Investor</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.getAttribute('data-delay') || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('animated');
+                    }, delay);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with data-animate attribute
+        document.querySelectorAll('[data-animate]').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
